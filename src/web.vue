@@ -163,9 +163,6 @@ export default {
 
   },
   created () {
-    // $("#goTop").click(function() {
-    //   $.scrollTo("#top", 1000);
-    // });
     // //右侧滑动
     $(window).on("scroll", function () {
       var offsetHeight = $(".QQbox").offset().top + $(".QQbox").height();
@@ -176,14 +173,8 @@ export default {
         $(".QQbox").css({ top: bannerOffsetHeight + "px" });
         $(".QQbox").css({ position:"absolute" });
       } else {
-        if (offset > bannerOffsetHeight && offsetHeight < $(document).height() - 150) {
-           $(".QQbox").css({ top:"0" });
+         $(".QQbox").css({ top:"0" });
           $(".QQbox").css({ position:"fixed" });
-        } else if (offset < offsetHeight) {
-          $(".QQbox").css({ top:"0" });
-          $(".QQbox").css({ position:"fixed" });
-          
-        }
       }
     });
   },
