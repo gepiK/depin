@@ -414,21 +414,18 @@ this.knowledgeList = res.data;
     queryProvinces () {
       service.queryProvinces().then(res => {
         this.provinces = res.ret;
-        console.log(res);
       });
     },
     // 获取城市
     queryCity (val) {
       service.queryCity({ "pid": val }).then(res => {
         this.cities = res.ret;
-        console.log(res);
       });
     },
     // 获取门店
     queryStore (val) {
       service.queryStore({ "cityCode": val }).then(res => {
         this.stores = res.ret;
-        console.log(res);
       });
     },
     // 监听事件
@@ -448,7 +445,6 @@ this.knowledgeList = res.data;
     },
     // 提交订单
     saveOrderHandle () {
-      console.log(this.formData)
       this.$refs.userForm.validate(vaild => {
         if (vaild) {
           service.saveOrder(this.formData).then(res => {
@@ -474,7 +470,6 @@ this.knowledgeList = res.data;
     // 获取预约数量
     getOrdersCount () {
       service.getOrdersCount().then(res => {
-        console.log(res)
         this.orderConut = res.ret;
       });
     },

@@ -29,19 +29,9 @@ export default {
   },
   mounted () {
     this.getLinks();
-        var marker, map = new AMap.Map("area_content", {
-        resizeEnable: true,
-        center: [118.783281,32.061846],
-        zoom: 13
-    });
-     function addMarker() {
-        marker = new AMap.Marker({
-            icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
-            position: [118.783281,32.061846]
-        });
-        marker.setMap(map);
-    }
-addMarker();
+ 
+     
+
   },
   methods: {
 
@@ -49,6 +39,35 @@ addMarker();
     getLinks () {
       service.getLinks().then(res => {
         this.content = res.ret;
+            //地理编码
+            
+            AMap.service('AMap.Geocoder',function(){//回调函数
+
+    //实例化Geocoder
+    let geocoder = new AMap.Geocoder();
+    //TODO: 使用geocoder 对象完成相关功能
+    geocoder.getLocation(res.ret.address, function(status, result) {
+    if (status === 'complete' && result.info === 'OK') {
+      let location = result.geocodes[0].location;
+               var marker, map = new AMap.Map("area_content", {
+        resizeEnable: true,
+        center: [location.lng,location.lat],
+        zoom: 13
+    });
+        function addMarker() {
+        marker = new AMap.Marker({
+            icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+            position: [location.lng,location.lat]
+        });
+        marker.setMap(map);
+    }
+    addMarker();
+    }else{
+        //获取经纬度失败
+    }
+}); 
+})
+
       })
     },
 

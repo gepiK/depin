@@ -169,19 +169,17 @@ export default {
     // //右侧滑动
     $(window).on("scroll", function () {
       var offsetHeight = $(".QQbox").offset().top + $(".QQbox").height();
+      var bannerOffsetHeight = $('.content-banner').offset().top+$('.content-banner').height();
       var offset = $(window).scrollTop();
-      $(".QQbox").css({ top: 42.5 + "rem" });
-      if (offset <= 669) {
-        $(".QQbox").css({ top: 42.5 + "rem" });
+      $(".QQbox").css({ top: bannerOffsetHeight + "px" });
+      if (offset <= bannerOffsetHeight) {
+        $(".QQbox").css({ top: bannerOffsetHeight + "px" });
         $(".QQbox").css({ position:"absolute" });
       } else {
-        if (offset > 669 && offsetHeight < $(document).height() - 150) {
-          // $(".QQbox").css({ top: offset - 516 + "px" });
-          // $(".QQbox").css({ top: offset + "px" });
+        if (offset > bannerOffsetHeight && offsetHeight < $(document).height() - 150) {
            $(".QQbox").css({ top:"0" });
           $(".QQbox").css({ position:"fixed" });
         } else if (offset < offsetHeight) {
-          // $(".QQbox").css({ top: offset - 945 + "px" });
           $(".QQbox").css({ top:"0" });
           $(".QQbox").css({ position:"fixed" });
           
