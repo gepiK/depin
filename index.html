@@ -2,42 +2,46 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <link type="image/x-icon" href="/static/favicon.ico" rel="icon">
-    <link type="image/x-icon" href="/static/favicon.ico" rel="shortcut icon">
-    <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
-    <!-- <meta name="apple-mobile-web-app-status-bar-style" content="black"> -->
-    <!-- <meta name="format-detection" content="telephone=no"> -->
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> -->
-    <link href="/static/swiper-3.4.2.min.css" rel="stylesheet">
-    <link href="/static/font-awesome.min.css" rel="stylesheet">
-    <title>德品·美罗宫</title>
-    <script>
-        if (/MSIE [1-8]\.0/.test(navigator.userAgent)){
-        alert('您的浏览器版本过低，请下载最新版或者更换其他浏览器浏览本站!')
-        location.href="https://www.baidu.com";
-        }
-    </script>
+  <meta charset="utf-8">
+  <link type="image/x-icon" href="/static/favicon.ico" rel="icon">
+  <link type="image/x-icon" href="/static/favicon.ico" rel="shortcut icon">
+  <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
+  <!-- <meta name="apple-mobile-web-app-status-bar-style" content="black"> -->
+  <!-- <meta name="format-detection" content="telephone=no"> -->
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> -->
+  <link href="/static/swiper-3.4.2.min.css" rel="stylesheet">
+  <link href="/static/font-awesome.min.css" rel="stylesheet">
+  <title>德品·美罗宫</title>
+  <script>
+    if (/MSIE [1-8]\.0/.test(navigator.userAgent)) {
+      alert('您的浏览器版本过低，请下载最新版或者更换其他浏览器浏览本站!')
+      location.href = "https://www.baidu.com";
+    }
+
+  </script>
 </head>
 
 <body>
-    <div id="idx"></div>
+  <div id="idx"></div>
 
-    <!-- 用不到jquery就不加 -->
-    <script src="/static/jquery.min.js"></script>
-    <script src="/static/swiper-3.4.2.jquery.min.js"></script>
-    <script src="http://webapi.amap.com/maps?v=1.4.1&key=152c4235547fd5db0741ae7c435e4ab5" type="text/javascript"></script>
-    <!--图片上传-->
+  <!-- 用不到jquery就不加 -->
+  <script src="/static/jquery.min.js"></script>
+  <script src="/static/swiper-3.4.2.jquery.min.js"></script>
+  <script src="/static/js/vendor.dll.js"></script>
+  <script src="http://webapi.amap.com/maps?v=1.4.1&key=152c4235547fd5db0741ae7c435e4ab5" type="text/javascript"></script>
+  <!--图片上传-->
 </body>
-<script>        
-    var mySwiper1 = new Swiper ('.content-banner', {
-        autoplay: 5000,
-      direction: 'horizontal',
-      loop: true,
-       observer:true,//修改swiper自己或子元素时，自动初始化swiper
-    observeParents:true,//修改swiper的父元素时，自动初始化swiper
-      // 如果需要分页器
-      pagination: '.swiper-pagination-banner',
-    });          
-    </script>
+<script>
+  var mySwiper1 = new Swiper('.content-banner', {
+    autoplay: 5000,
+    direction: 'horizontal',
+    loop: true,
+    observer: true, //修改swiper自己或子元素时，自动初始化swiper
+    observeParents: true, //修改swiper的父元素时，自动初始化swiper
+    // 如果需要分页器
+    pagination: '.swiper-pagination-banner',
+  });
+
+</script>
+
 </html>

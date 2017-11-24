@@ -1,16 +1,18 @@
-var path = require('path')
-var glob = require('glob')
-var config = require('../config')
-var webpack = require('webpack')
-var merge = require('webpack-merge')
-var utils = require('./utils')
-var baseWebpackConfig = require('./webpack.base.conf')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+var path = require('path');
+var glob = require('glob');
+var config = require('../config');
+var webpack = require('webpack');
+var merge = require('webpack-merge');
+var utils = require('./utils');
+var baseWebpackConfig = require('./webpack.base.conf');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // add hot-reload related code to entry chunks
-Object.keys(baseWebpackConfig.entry).forEach(function (name) {
-  baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
-})
+Object.keys(baseWebpackConfig.entry).forEach(function(name) {
+  baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(
+    baseWebpackConfig.entry[name]
+  );
+});
 
 var devConfig = {
   module: {
@@ -21,6 +23,10 @@ var devConfig = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': config.dev.env
+    }),
+    new webpack.DllReferencePlugin({
+      context: '.',
+      manifest: require('./vendor-manifest.json')
     }),
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -33,7 +39,6 @@ var devConfig = {
       inject: true
     })
   ]
-}
+};
 
-
-module.exports = merge(baseWebpackConfig, devConfig)
+module.exports = merge(baseWebpackConfig, devConfig);

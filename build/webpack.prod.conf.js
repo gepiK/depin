@@ -9,7 +9,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HappyPack = require('happypack');
 var env = config.build.env;
-
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 var webpackConfig = merge(baseWebpackConfig, {
   module: {
     loaders: utils.styleLoaders({
@@ -39,6 +40,11 @@ var webpackConfig = merge(baseWebpackConfig, {
       loaders: ['babel'],
       threads: 4
     }),
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require('./dist/vendor-manifest.json')
+    }),
+    new BundleAnalyzerPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
