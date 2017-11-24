@@ -15,6 +15,7 @@
     "babel-plugin-component": "^0.10.1",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "clean-webpack-plugin": "^0.1.17",
     "element-ui": "^2.0.4",
     "happypack": "^4.0.0",
     "less": "^2.7.2",
