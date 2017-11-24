@@ -41,8 +41,8 @@ var webpackConfig = merge(baseWebpackConfig, {
       threads: 4
     }),
     new webpack.DllReferencePlugin({
-      context: __dirname,
-      manifest: require('./dist/vendor-manifest.json')
+      context: '.',
+      manifest: require('./vendor-manifest.json')
     }),
     new BundleAnalyzerPlugin(),
     new webpack.optimize.UglifyJsPlugin({
