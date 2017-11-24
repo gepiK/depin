@@ -9,8 +9,7 @@ Vue.use(VueRouter);
 
 let router = new VueRouter({
   mode: 'history',
-  routes: [
-    {
+  routes: [{
       path: '/',
       component: Main,
       meta: {
@@ -113,6 +112,13 @@ let router = new VueRouter({
       component: resolve => require(['views/lists/detail.vue'], resolve),
       meta: {
         title: ''
+      }
+    },
+    {
+      path: '/videoList',
+      component: resolve => require(['views/videoList/videoList.vue'], resolve),
+      meta: {
+        title: '品牌视频'
       }
     }
   ]

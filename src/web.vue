@@ -28,7 +28,7 @@
             <ng-menu-item index="/">首页</ng-menu-item>
             <ng-menu-item index="/prodList">产品中心</ng-menu-item>
             <ng-menu-item index="/3">在线体验</ng-menu-item>
-            <ng-menu-item index="/4">品牌视频</ng-menu-item>
+            <ng-menu-item index="/videoList">品牌视频</ng-menu-item>
             <ng-menu-item index="/newsList">品牌资讯</ng-menu-item>
             <ng-menu-item index="/6">免费量房</ng-menu-item>
             <ng-menu-item index="/lists/appcase">应用案例</ng-menu-item>
@@ -82,7 +82,7 @@
                 <b>产品中心</b>
               </div>
               <ul>
-                <li v-for="item in bigCate" class="about-content-item"><router-link :to="'/prodList/'+item.id">{{item.name}}</router-link></li>
+                <li v-for="item in bigCate" class="about-content-item" :key="item.$index"><router-link :to="'/prodList/'+item.id">{{item.name}}</router-link></li>
               </ul>
             </li>
             <li class="horizontally ablout-item">
@@ -101,7 +101,7 @@
               </div>
               <ul>
                 <li class="about-content-item"><router-link to="/linkme">联系方式</router-link></li>
-                <li class="about-content-item">交通路线</li>
+                <li class="about-content-item"><router-link to="/linkme">交通路线</router-link></li>
               </ul>
             </li>
           </ul>
@@ -141,69 +141,65 @@ import * as filters from "js/filters";
 import * as service from "js/service";
 import "src/styles/component/index.less";
 export default {
-  data () {
+  data() {
     return {
-      activeIndex:location.pathname,
-      bannerList: [], // 轮播图
-
+      activeIndex: location.pathname,
+      bannerList: [] // 轮播图
     };
   },
-  computed:{
-  },
-  watch:{
-    $route(route){
+  computed: {},
+  watch: {
+    $route(route) {
       let path = route.path;
-      if(path.includes('prodList')) path = '/prodList';
+      if (path.includes("prodList")) path = "/prodList";
       this.activeIndex = path;
     }
   },
-  mounted () {
+  mounted() {
     this.queryBannerList();
     this.getBigcate();
-
   },
-  created () {
+  created() {
     // //右侧滑动
-    $(window).on("scroll", function () {
+    $(window).on("scroll", function() {
       var offsetHeight = $(".QQbox").offset().top + $(".QQbox").height();
-      var bannerOffsetHeight = $('.content-banner').offset().top+$('.content-banner').height();
+      var bannerOffsetHeight =
+        $(".content-banner").offset().top + $(".content-banner").height();
       var offset = $(window).scrollTop();
       $(".QQbox").css({ top: bannerOffsetHeight + "px" });
       if (offset <= bannerOffsetHeight) {
         $(".QQbox").css({ top: bannerOffsetHeight + "px" });
-        $(".QQbox").css({ position:"absolute" });
+        $(".QQbox").css({ position: "absolute" });
       } else {
-         $(".QQbox").css({ top:"0" });
-          $(".QQbox").css({ position:"fixed" });
+        $(".QQbox").css({ top: "0" });
+        $(".QQbox").css({ position: "fixed" });
       }
     });
   },
   computed: {
-    isIE () {
+    isIE() {
       return filters.matchIe();
     }
   },
   methods: {
-    linkTo (num) {
+    linkTo(num) {
       this.isActive_1 = this.isActive_2 = this.isActive_3 = this.isActive_4 = this.isActive_5 = this.isActive_6 = this.isActive_7 = false;
       this["isActive_" + num] = true;
     },
-    handleSelect (val) {
+    handleSelect(val) {
       console.log(val);
     },
     // 获取banner图
-    queryBannerList () {
+    queryBannerList() {
       service.queryBannerList().then(res => {
         this.bannerList = res;
-
       });
     },
-    getBigcate () {
+    getBigcate() {
       service.getBigcate().then(res => {
         this.bigCate = res.ret;
-
       });
-    },
+    }
   }
 };
 </script>

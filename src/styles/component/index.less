@@ -52,8 +52,7 @@
         height: 100%;
         margin: 0 auto;
         line-height: 2rem;
-        span:nth-child(1) {
-        }
+        span:nth-child(1) {}
         span:nth-child(2) {
           float: right;
           line-height: 2rem;
@@ -81,9 +80,16 @@
     }
     .nav {
       padding-bottom: 1rem;
+      text-align: center;
       .el-menu {
+        display: inline-block;
+        width: 100%;
+        margin: 0 auto;
+        white-space: nowrap;
         background-color: #fff;
         .el-menu-item {
+          display: inline-block;
+          float: none;
           padding: 0 3%;
           @media screen and (max-width: 1300px) {
             padding: 0 2.8%;
@@ -272,7 +278,7 @@
         position: absolute;
         width: 29.5%;
         height: 100%;
-        & > div {
+        &>div {
           overflow: hidden;
           height: 100%;
           margin-bottom: 0.3rem;
@@ -333,6 +339,7 @@
     }
   }
 }
+
 
 /* 六大优势 */
 
@@ -404,7 +411,7 @@
   .about-content {
     width: 80%;
     padding-left: 1rem;
-    & > ul {
+    &>ul {
       width: 100%;
       .about-content-title {
         font-size: 1rem;
@@ -492,6 +499,6 @@
   border-bottom: 5px solid rgb(127, 85, 10);
 }
 
-.el-menu--horizontal > .el-menu-item:hover {
+.el-menu--horizontal>.el-menu-item:hover {
   border-bottom: none;
 }
