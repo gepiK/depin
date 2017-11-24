@@ -9,8 +9,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HappyPack = require('happypack');
 var env = config.build.env;
-// var BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-//   .BundleAnalyzerPlugin;
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 var webpackConfig = merge(baseWebpackConfig, {
   module: {
     loaders: utils.styleLoaders({
@@ -44,7 +44,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       context: path.resolve(__dirname, '..'),
       manifest: require('../static/vendor-manifest.json')
     }),
-    // new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false

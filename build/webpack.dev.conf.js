@@ -25,8 +25,8 @@ var devConfig = {
       'process.env': config.dev.env
     }),
     new webpack.DllReferencePlugin({
-      context: '.',
-      manifest: require('./vendor-manifest.json')
+      context: path.resolve(__dirname, '..'),
+      manifest: require('../static/vendor-manifest.json')
     }),
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.optimize.OccurenceOrderPlugin(),
