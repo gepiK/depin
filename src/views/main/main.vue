@@ -59,7 +59,7 @@
         </video>
       </div>
     </section>
-    
+
     <section>
       <div class="content-title more-parent">
         <div class="content-title">
@@ -91,7 +91,7 @@
         <div class="swiper-pagination swiper-pagination-s2"></div>
       </div>
     </section>
-    <section>
+    <section id="js-order">
       <div class="content-title">
         <div class="title-warp-left"></div>
         <div class="title-t1">
@@ -145,22 +145,22 @@
           <div>
             <div class="order-title">累计{{orderConut|| 0}}人预约</div>
             <div id="scrollapp">
-            <ul>
-              <li v-for="item in orderList" :key="item.id">
-                <div>
-                  <p>{{item.createTime}}{{'&nbsp;'.repeat(10)}}{{item.realName|| '&nbsp;'.repeat(17)}}</p>
-                  <p>已申请上门量房{{'&nbsp;'.repeat(30)}}</p>
-                </div>
-              </li>
-            </ul>
-             <ul>
-              <li v-for="item in orderList" :key="item.id">
-                <div>
-                  <p>{{item.createTime}}{{'&nbsp;'.repeat(10)}}{{item.realName|| '&nbsp;'.repeat(17)}}</p>
-                  <p>已申请上门量房{{'&nbsp;'.repeat(30)}}</p>
-                </div>
-              </li>
-            </ul>
+              <ul>
+                <li v-for="item in orderList" :key="item.id">
+                  <div>
+                    <p>{{item.createTime}}{{'&nbsp;'.repeat(10)}}{{item.realName|| '&nbsp;'.repeat(17)}}</p>
+                    <p>已申请上门量房{{'&nbsp;'.repeat(30)}}</p>
+                  </div>
+                </li>
+              </ul>
+              <ul>
+                <li v-for="item in orderList" :key="item.id">
+                  <div>
+                    <p>{{item.createTime}}{{'&nbsp;'.repeat(10)}}{{item.realName|| '&nbsp;'.repeat(17)}}</p>
+                    <p>已申请上门量房{{'&nbsp;'.repeat(30)}}</p>
+                  </div>
+                </li>
+              </ul>
             </div>
 
           </div>
@@ -183,7 +183,7 @@
       </div>
 
       <div class="section-item">
-        <img v-for="item in appcaseList" :class="{'img-left':item.$index===0,'img-right':item.$index===3,'img-middle':item.$index===2||item.$index===3}" class="img-1-4 img-left" :src="item.image" alt="">
+        <img v-for="item in appcaseList" :key="item.$index" :class="{'img-left':item.$index===0,'img-right':item.$index===3,'img-middle':item.$index===2||item.$index===3}" class="img-1-4 img-left" :src="item.image" alt="">
       </div>
     </section>
     <section>
@@ -268,11 +268,11 @@
           <div class="title-warp-right"></div>
         </div>
         <router-link to="/lists/knowledge"><img class="more" src="../../static/more2.png" alt=""></router-link>
-        
+
       </div>
       <div class="section-item clearfix">
-        <div v-for="item in knowledgeList"class="img-zhuangxiu">
-          <img class="img l" style="height:15rem"  :src="item.image" alt="">
+        <div v-for="item in knowledgeList" class="img-zhuangxiu" :key="item.$index">
+          <img class="img l" style="height:15rem" :src="item.image" alt="">
           <p>{{item.title}}</p>
         </div>
       </div>
@@ -308,16 +308,16 @@ export default {
   data () {
     return {
       bigCate: [], // 产品分类
-      newsList:[], // 轮播图新闻资讯 5条
-      appcaseList:[], // 应用案例列表 4条
-      knowledgeList:[], // 装修知识列表 3条
+      newsList: [], // 轮播图新闻资讯 5条
+      appcaseList: [], // 应用案例列表 4条
+      knowledgeList: [], // 装修知识列表 3条
       sixgoods: [], // 六大优势
       provinces: [], // 省份
       cities: [], // 城市
       stores: [], // 门店
       orderList: [], // 预约列表
       orderConut: 0, // 预约数量
-      MyMarh:null, // 定时器
+      MyMarh: null, // 定时器
       formData: {
         realName: '',// 用户姓名
         tel: '',//用户电话
@@ -358,45 +358,67 @@ export default {
     }
   },
   mounted () {
-     new Swiper ('.content-s2', {
-        autoplay: 5000,
+    new Swiper('.content-s2', {
+      autoplay: 5000,
       direction: 'horizontal',
       loop: true,
-      observer:true,//修改swiper自己或子元素时，自动初始化swiper
-    observeParents:true,//修改swiper的父元素时，自动初始化swiper
+      observer: true,//修改swiper自己或子元素时，自动初始化swiper
+      observeParents: true,//修改swiper的父元素时，自动初始化swiper
       // 如果需要分页器
       pagination: '.swiper-pagination-s2',
-      
-    });  
-    this.getBigcate(); // 获取产品分类
-    this.querygoods(); // 获取六大优势
-    this.queryProvinces(); // 获取省份信息
-    this.getOrders(); // 获取预约数
-    this.getOrdersCount(); // 获取预约数量
-    this.getNewsList(); // 获取轮播图资讯 5条
-    this.getAppcases(); // 应用案例
-    this.getKnowledges(); // 装修知识
+
+    });
+    Promise.all([
+      this.getBigcate(), // 获取产品分类
+      this.querygoods(), // 获取六大优势
+      this.queryProvinces(), // 获取省份信息
+      this.getOrders(), // 获取预约数
+      this.getOrdersCount(), // 获取预约数量
+      this.getNewsList(), // 获取轮播图资讯 5条
+      this.getAppcases(), // 应用案例
+      this.getKnowledges(), // 装修知识
+    ]).then(() => {
+      this.initScroll();
+    })
+
   },
   computed: {
     isIE () {
       return filters.matchIe();
     }
   },
+  watch: {
+    $route (route) {
+      this.initScroll();
+
+    }
+  },
   methods: {
+    // 初始化滚动条
+    initScroll () {
+      let path = this.$route.path;
+      let scrollBody = document.documentElement || document.body;
+      if (path.includes('order')) {
+        scrollBody.scrollTop = $('#js-order').offset().top;
+      } else {
+        scrollBody.scrollTop = 0;
+      }
+
+    },
     getBigcate () {
       service.getBigcate().then(res => {
         this.bigCate = res.ret;
       })
     },
-        getNewsList () {
-      service.getNewsList({ pageNo: 1, pageSize:5 }).then(res => {
+    getNewsList () {
+      service.getNewsList({ pageNo: 1, pageSize: 5 }).then(res => {
         this.newsList = res.data;
 
       })
     },
-            getAppcases () {
+    getAppcases () {
       service.getAppcases({ pageNo: 1, pageSize: 4 }).then(res => {
-this.appcaseList = res.data;
+        this.appcaseList = res.data;
       })
     },
     // 获取六大优势
@@ -405,9 +427,9 @@ this.appcaseList = res.data;
         this.sixgoods = res;
       });
     },
-     getKnowledges () {
+    getKnowledges () {
       service.getKnowledges({ pageNo: 1, pageSize: 3 }).then(res => {
-this.knowledgeList = res.data;
+        this.knowledgeList = res.data;
       })
     },
     //  获取省份
@@ -473,21 +495,21 @@ this.knowledgeList = res.data;
         this.orderConut = res.ret;
       });
     },
-    moveInterval(){
+    moveInterval () {
       let scrollApp = document.querySelector('#scrollapp');
-      let scrolls= document.querySelectorAll('#scrollapp ul');
-      let speed=30;
-      if(this.MyMarh) {
-        clearInterval(this.MyMarh); 
+      let scrolls = document.querySelectorAll('#scrollapp ul');
+      let speed = 30;
+      if (this.MyMarh) {
+        clearInterval(this.MyMarh);
       }
-      this.MyMarh=setInterval(Marqueeh,speed)
-      scrollApp.onmouseover=()=>clearInterval(this.MyMarh)
-      scrollApp.onmouseout=()=>this.MyMarh=setInterval(Marqueeh,speed)
-         function Marqueeh(){
-      if(scrolls[1].offsetHeight-scrollApp.scrollTop<=0)
-        scrollApp.scrollTop-=scrolls[0].offsetHeight
-      else{
-        scrollApp.scrollTop++
+      this.MyMarh = setInterval(Marqueeh, speed)
+      scrollApp.onmouseover = () => clearInterval(this.MyMarh)
+      scrollApp.onmouseout = () => this.MyMarh = setInterval(Marqueeh, speed)
+      function Marqueeh () {
+        if (scrolls[1].offsetHeight - scrollApp.scrollTop <= 0)
+          scrollApp.scrollTop -= scrolls[0].offsetHeight
+        else {
+          scrollApp.scrollTop++
         }
       }
     },

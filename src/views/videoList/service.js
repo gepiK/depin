@@ -1,9 +1,9 @@
 import common from 'js/common';
 
 // 品牌视频
-export const getVideoList = function (data) {
+export const getVideoList = function(data) {
   let option = {
-    url: '/front/knowledge.html',
+    url: '/index/video.html',
     data,
     type: 'get'
   };

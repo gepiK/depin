@@ -1,6 +1,5 @@
 <style>
 
-
 </style>
 <template>
   <div id='idx' class="container">
@@ -31,7 +30,7 @@
             <ng-menu-item index="/3">在线体验</ng-menu-item>
             <ng-menu-item index="/videoList">品牌视频</ng-menu-item>
             <ng-menu-item index="/newsList">品牌资讯</ng-menu-item>
-            <ng-menu-item index="/6">免费量房</ng-menu-item>
+            <ng-menu-item index="/order">免费量房</ng-menu-item>
             <ng-menu-item index="/lists/appcase">应用案例</ng-menu-item>
             <ng-menu-item index="/8">六大优势</ng-menu-item>
             <ng-menu-item index="/lists/knowledge">装修知识</ng-menu-item>
@@ -171,82 +170,82 @@
   </div>
 </template>
 <script>
-  import common from "js/common";
-  import * as filters from "js/filters";
-  import * as service from "js/service";
-  import "src/styles/component/index.less";
-  export default {
-    data() {
-      return {
-        activeIndex: location.pathname,
-        bannerList: [] // 轮播图
-      };
-    },
-    computed: {},
-    watch: {
-      $route(route) {
-        let path = route.path;
-        if (path.includes("prodList")) path = "/prodList";
-        this.activeIndex = path;
-      }
-    },
-    mounted() {
-      this.queryBannerList();
-      this.getBigcate();
-    },
-    created() {
-      // //右侧滑动
-      $(window).on("scroll", function () {
-        var offsetHeight = $(".QQbox").offset().top + $(".QQbox").height();
-        var bannerOffsetHeight =
-          $(".content-banner").offset().top + $(".content-banner").height();
-        var offset = $(window).scrollTop();
+import common from "js/common";
+import * as filters from "js/filters";
+import * as service from "js/service";
+import "src/styles/component/index.less";
+export default {
+  data () {
+    return {
+      activeIndex: location.pathname,
+      bannerList: [] // 轮播图
+    };
+  },
+  computed: {},
+  watch: {
+    $route (route) {
+      let path = route.path;
+      if (path.includes("prodList")) path = "/prodList";
+      this.activeIndex = path;
+    }
+  },
+  mounted () {
+    this.queryBannerList();
+    this.getBigcate();
+  },
+  created () {
+    // //右侧滑动
+    $(window).on("scroll", function () {
+      var offsetHeight = $(".QQbox").offset().top + $(".QQbox").height();
+      var bannerOffsetHeight =
+        $(".content-banner").offset().top + $(".content-banner").height();
+      var offset = $(window).scrollTop();
+      $(".QQbox").css({
+        top: bannerOffsetHeight + "px"
+      });
+      if (offset <= bannerOffsetHeight) {
         $(".QQbox").css({
           top: bannerOffsetHeight + "px"
         });
-        if (offset <= bannerOffsetHeight) {
-          $(".QQbox").css({
-            top: bannerOffsetHeight + "px"
-          });
-          $(".QQbox").css({
-            position: "absolute"
-          });
-        } else {
-          $(".QQbox").css({
-            top: "0"
-          });
-          $(".QQbox").css({
-            position: "fixed"
-          });
-        }
+        $(".QQbox").css({
+          position: "absolute"
+        });
+      } else {
+        $(".QQbox").css({
+          top: "0"
+        });
+        $(".QQbox").css({
+          position: "fixed"
+        });
+      }
+    });
+  },
+  computed: {
+    isIE () {
+      return filters.matchIe();
+    }
+  },
+  methods: {
+    linkTo (num) {
+      this.isActive_1 = this.isActive_2 = this.isActive_3 = this.isActive_4 = this.isActive_5 = this.isActive_6 =
+        this.isActive_7 = false;
+      this["isActive_" + num] = true;
+    },
+    handleSelect (val) {
+      console.log(val);
+    },
+    // 获取banner图
+    queryBannerList () {
+      service.queryBannerList().then(res => {
+        this.bannerList = res;
       });
     },
-    computed: {
-      isIE() {
-        return filters.matchIe();
-      }
-    },
-    methods: {
-      linkTo(num) {
-        this.isActive_1 = this.isActive_2 = this.isActive_3 = this.isActive_4 = this.isActive_5 = this.isActive_6 =
-          this.isActive_7 = false;
-        this["isActive_" + num] = true;
-      },
-      handleSelect(val) {
-        console.log(val);
-      },
-      // 获取banner图
-      queryBannerList() {
-        service.queryBannerList().then(res => {
-          this.bannerList = res;
-        });
-      },
-      getBigcate() {
-        service.getBigcate().then(res => {
-          this.bigCate = res.ret;
-        });
-      }
+    getBigcate () {
+      service.getBigcate().then(res => {
+        this.bigCate = res.ret;
+      });
     }
-  };
+  }
+};
 
 </script>

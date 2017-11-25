@@ -9,8 +9,16 @@ Vue.use(VueRouter);
 
 let router = new VueRouter({
   mode: 'history',
-  routes: [{
+  routes: [
+    {
       path: '/',
+      component: Main,
+      meta: {
+        title: '首页'
+      }
+    },
+    {
+      path: '/order',
       component: Main,
       meta: {
         title: '首页'
