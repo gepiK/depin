@@ -48,18 +48,11 @@
         <div class="title-warp-right"></div>
       </div>
       <div class="content-video">
-        <video class="video" src="http://minwf.b0.upaiyun.com/video/5asm.mp4" controls="controls">
-          您的浏览器不支持 video 标签。
-        </video>
-        <video class="video" src="http://minwf.b0.upaiyun.com/video/qhdb.mp4" controls="controls">
-          您的浏览器不支持 video 标签。
-        </video>
-        <video class="video" src="http://minwf.b0.upaiyun.com/video/fhdb.mp4" controls="controls">
+        <video v-for="item in videoList" :key="item.$index" class="video" :src="item.propUrl" controls="controls">
           您的浏览器不支持 video 标签。
         </video>
       </div>
     </section>
-
     <section>
       <div class="content-title more-parent">
         <div class="content-title">
@@ -72,7 +65,9 @@
           </div>
           <div class="title-warp-right"></div>
         </div>
-        <router-link to="/newsList"><img class="more" src="../../static/more1.png" alt=""></router-link>
+        <router-link to="/newsList">
+          <img class="more" src="../../static/more1.png" alt="">
+        </router-link>
       </div>
       <div class="swiper-container content-s2 clearfix">
         <div class="swiper-wrapper">
@@ -104,7 +99,9 @@
       </div>
       <div class="content-free-wrap">
         <div class="content-free-wrap_left">
-          <div class="p7"><img class="img" src="../../static/p7.jpg" alt=""></div>
+          <div class="p7">
+            <img class="img" src="../../static/p7.jpg" alt="">
+          </div>
 
           <ng-form class="order-form" ref="userForm" :model="formData" :rules="formRules">
             <ng-form-item class="order-form-item" prop="realName">
@@ -267,7 +264,9 @@
           </div>
           <div class="title-warp-right"></div>
         </div>
-        <router-link to="/lists/knowledge"><img class="more" src="../../static/more2.png" alt=""></router-link>
+        <router-link to="/lists/knowledge">
+          <img class="more" src="../../static/more2.png" alt="">
+        </router-link>
 
       </div>
       <div class="section-item clearfix">
@@ -307,6 +306,7 @@ import * as service from "./service";
 export default {
   data () {
     return {
+      videoList: [], // 视频列表
       bigCate: [], // 产品分类
       newsList: [], // 轮播图新闻资讯 5条
       appcaseList: [], // 应用案例列表 4条
@@ -319,11 +319,11 @@ export default {
       orderConut: 0, // 预约数量
       MyMarh: null, // 定时器
       formData: {
-        realName: '',// 用户姓名
-        tel: '',//用户电话
-        provinceCode: '',// 当前选择的省份
-        cityCode: '',// 当前选择的城市
-        storeId: '',// 当前选择的门店
+        realName: '', // 用户姓名
+        tel: '', //用户电话
+        provinceCode: '', // 当前选择的省份
+        cityCode: '', // 当前选择的城市
+        storeId: '', // 当前选择的门店
       },
       formRules: {
         realName: {
@@ -362,13 +362,14 @@ export default {
       autoplay: 5000,
       direction: 'horizontal',
       loop: true,
-      observer: true,//修改swiper自己或子元素时，自动初始化swiper
-      observeParents: true,//修改swiper的父元素时，自动初始化swiper
+      observer: true, //修改swiper自己或子元素时，自动初始化swiper
+      observeParents: true, //修改swiper的父元素时，自动初始化swiper
       // 如果需要分页器
       pagination: '.swiper-pagination-s2',
 
     });
     Promise.all([
+      this.getvideoList(), // 视频接口
       this.getBigcate(), // 获取产品分类
       this.querygoods(), // 获取六大优势
       this.queryProvinces(), // 获取省份信息
@@ -380,7 +381,6 @@ export default {
     ]).then(() => {
       this.initScroll();
     })
-
   },
   computed: {
     isIE () {
@@ -410,14 +410,26 @@ export default {
         this.bigCate = res.ret;
       })
     },
+    // 视频接口 
+    getvideoList () {
+      service.getVideoList().then(res => {
+        this.videoList = res.ret;
+      });
+    },
     getNewsList () {
-      service.getNewsList({ pageNo: 1, pageSize: 5 }).then(res => {
+      service.getNewsList({
+        pageNo: 1,
+        pageSize: 5
+      }).then(res => {
         this.newsList = res.data;
 
       })
     },
     getAppcases () {
-      service.getAppcases({ pageNo: 1, pageSize: 4 }).then(res => {
+      service.getAppcases({
+        pageNo: 1,
+        pageSize: 4
+      }).then(res => {
         this.appcaseList = res.data;
       })
     },
@@ -428,7 +440,10 @@ export default {
       });
     },
     getKnowledges () {
-      service.getKnowledges({ pageNo: 1, pageSize: 3 }).then(res => {
+      service.getKnowledges({
+        pageNo: 1,
+        pageSize: 3
+      }).then(res => {
         this.knowledgeList = res.data;
       })
     },
@@ -440,13 +455,17 @@ export default {
     },
     // 获取城市
     queryCity (val) {
-      service.queryCity({ "pid": val }).then(res => {
+      service.queryCity({
+        "pid": val
+      }).then(res => {
         this.cities = res.ret;
       });
     },
     // 获取门店
     queryStore (val) {
-      service.queryStore({ "cityCode": val }).then(res => {
+      service.queryStore({
+        "cityCode": val
+      }).then(res => {
         this.stores = res.ret;
       });
     },
@@ -505,6 +524,7 @@ export default {
       this.MyMarh = setInterval(Marqueeh, speed)
       scrollApp.onmouseover = () => clearInterval(this.MyMarh)
       scrollApp.onmouseout = () => this.MyMarh = setInterval(Marqueeh, speed)
+
       function Marqueeh () {
         if (scrolls[1].offsetHeight - scrollApp.scrollTop <= 0)
           scrollApp.scrollTop -= scrolls[0].offsetHeight
@@ -516,4 +536,5 @@ export default {
 
   }
 }
+
 </script>

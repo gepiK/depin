@@ -35,10 +35,9 @@ export default {
     this.getvideoList();
   },
   methods: {
-    // 品牌荣誉
+    // 视频接口
     getvideoList () {
       service.getVideoList().then(res => {
-        console.log(res);
         this.videoList = res.ret;
       });
     }

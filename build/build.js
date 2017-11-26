@@ -10,7 +10,6 @@ var webpack = require('webpack');
 var webpackConfig = require('./webpack.prod.conf');
 var fs = require('fs');
 var glob = require('glob');
-
 console.log(
   '  Tip:\n' +
     '  Built files are meant to be served over an HTTP server.\n' +
