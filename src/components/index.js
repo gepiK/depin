@@ -26,7 +26,9 @@ import {
   Dialog,
   Icon,
   Breadcrumb,
-  BreadcrumbItem
+  BreadcrumbItem,
+  Tabs,
+  TabPane
 } from 'element-ui';
 
 //注册组件
@@ -46,6 +48,8 @@ Vue.component('ng-dialog', Dialog);
 Vue.component('ng-icon', Icon);
 Vue.component('ng-breadcrumb', Breadcrumb);
 Vue.component('ng-breadcrumb-item', BreadcrumbItem);
+Vue.component('ng-tabs', Tabs);
+Vue.component('ng-tab-pane', TabPane);
 
 Vue.prototype.$message = Message;
 Vue.prototype.$loading = Loading.service;
@@ -105,8 +109,9 @@ window.globalBus = new Vue({
       window.open(
         url,
         '_blank',
-        `width=${windowWidth},height=${availHeight -
-          150},left=${screenLeft},top=50,menubar=no,toolbar=no,status=no,scrollbars=yes`
+        `width=${windowWidth},height=${availHeight - 150},left=${
+          screenLeft
+        },top=50,menubar=no,toolbar=no,status=no,scrollbars=yes`
       );
     }
   }

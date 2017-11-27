@@ -37,7 +37,7 @@
       </div>
       <div v-else v-for="item in prodList" :key="item.$index" class="l item">
         <img v-if="item.image" class="img-h l" :src="item.image" alt="">
-        <div v-else  class="img-h l"></div>
+        <div v-else class="img-h l"></div>
         <p class="prod-name">
           <b>{{item.prodName}}</b>
         </p>
@@ -78,23 +78,25 @@ export default {
     }
   },
   mounted () {
-    console.log('mounted')
     this.getFilter();
     this.getProdList();
   },
-      watch:{
-    $route() {
-      console.log('route')
-       this.getFilter();
+  watch: {
+    $route () {
+      this.getFilter();
     }
-  } , 
+  },
   methods: {
     getProdList (val = 1) {
       let data = {};
       Object.assign(data, this.filter);
+      let searchValue = localStorage.getItem('searchValue');
+      if (searchValue) data = { searchValue };
       service.getProdList({ pageNo: val, pageSize: 16, ...data }).then(res => {
         this.prodList = res.data;
         this.total = res.count;
+        searchValue = '';
+
       });
     },
     getFilter () {
@@ -102,9 +104,9 @@ export default {
       service.getBigcate().then(res => {
         this.cateId = res.ret;
         let params = this.$route.params;
-        if(params && params.catePropId) {
-          this.selectFilter('cateId',res.ret[_.map(res.ret,'propId').indexOf(Number.parseInt(params.catePropId))]);
-        }else {
+        if (params && params.catePropId) {
+          this.selectFilter('cateId', res.ret[_.map(res.ret, 'propId').indexOf(Number.parseInt(params.catePropId))]);
+        } else {
           this.filter.cateId = '';
           this.getProdList();
         }
@@ -123,6 +125,7 @@ export default {
       });
     },
     selectFilter (type, item) {
+      this.$emit('clearSearchValue');
       if (item.isActive) {
         return;
       } else {
@@ -172,7 +175,7 @@ export default {
     },
     queryItemById (id, prop, list) {
       let value = '';
-     value =  _.map(list,'propName')[_.map(list,'prop').indexOf(id)];
+      value = _.map(list, 'propName')[_.map(list, 'prop').indexOf(id)];
       // for (let i = 0; i < list.length; i++) {
       //   if (list[i][prop] === id) {
       //     value = list[i].propName;

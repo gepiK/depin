@@ -19,8 +19,8 @@
         <div class="search d6" @mouseover="isForcus=true" @mouseout="isForcus=false">
           <form>
             <span v-if="isIE && !isForcus" class="search-text">输入产品型号 搜素更多</span>
-            <input @blur="isForcus=false" @focus="isForcus=true" type="text" placeholder="输入产品型号 搜素更多">
-            <button type="submit"></button>
+            <input v-model="searchValue" @blur="isForcus=false" @focus="isForcus=true" type="text" placeholder="输入产品型号 搜素更多">
+            <button @click.prevent="searchProdList()"></button>
           </form>
         </div>
         <nav class="nav">
@@ -32,7 +32,7 @@
             <ng-menu-item index="/newsList">品牌资讯</ng-menu-item>
             <ng-menu-item index="/order">免费量房</ng-menu-item>
             <ng-menu-item index="/lists/appcase">应用案例</ng-menu-item>
-            <ng-menu-item index="/8">六大优势</ng-menu-item>
+            <ng-menu-item index="/goodsList">六大优势</ng-menu-item>
             <ng-menu-item index="/lists/knowledge">装修知识</ng-menu-item>
           </ng-menu>
         </nav>
@@ -66,11 +66,11 @@
       </div>
     </div>
     <div class="content">
-      <router-view></router-view>
+      <router-view @clearSearchValue="clearSearchValue()"></router-view>
     </div>
     <div class="about">
       <section class="about-1">
-        <img style="width:95%" src="./static/about-1.png" alt="">
+        <img style="width:95%" src="./static/about-1.png" alt=" ">
       </section>
       <div class="about-2">
 
@@ -105,7 +105,7 @@
               </div>
               <ul>
                 <li v-for="item in bigCate" class="about-content-item" :key="item.$index">
-                  <router-link :to="'/prodList/'+item.id">{{item.name}}</router-link>
+                  <router-link :to=" '/prodList/'+item.id">{{item.name}}</router-link>
                 </li>
               </ul>
             </li>
@@ -141,7 +141,7 @@
           </ul>
         </div>
         <div class="qrcode horizontally">
-          <img class="img" src="./static/qr.png" alt="">
+          <img class="img" src="./static/qr.png" alt=" ">
           <p>德品地板官方微信</p>
         </div>
       </div>
@@ -154,13 +154,13 @@
           </p>
         </div>
         <div class="footer-content">
-          <a href="">招聘发布</a>
+          <a href=" ">招聘发布</a>
           <span>|</span>
-          <a href="">友情链接</a>
+          <a href=" ">友情链接</a>
           <span>|</span>
-          <a href="">店面查询</a>
+          <a href=" ">店面查询</a>
           <span>|</span>
-          <a href="">经销商登录</a>
+          <a href=" ">经销商登录</a>
         </div>
         <div class="copyright">
           <p>COPYRIGHT©2015 苏州市一品木业有限公司 ALL RIGHTS RESEVERVED 苏ICP备16061331号</p>
@@ -178,7 +178,9 @@ export default {
   data () {
     return {
       activeIndex: location.pathname,
-      bannerList: [] // 轮播图
+      bannerList: [], // 轮播图
+      searchValue: '', // 搜索框的查询条件
+
     };
   },
   computed: {},
@@ -194,7 +196,7 @@ export default {
     this.getBigcate();
   },
   created () {
-    // //右侧滑动
+
     $(window).on("scroll", function () {
       var offsetHeight = $(".QQbox").offset().top + $(".QQbox").height();
       var bannerOffsetHeight =
@@ -244,7 +246,16 @@ export default {
       service.getBigcate().then(res => {
         this.bigCate = res.ret;
       });
-    }
+    },
+    searchProdList () {
+      if (this.searchValue === '') return;
+      localStorage.setItem('searchValue', this.searchValue);
+      this.$router.push({ path: '/prodList' + '?time=' + (new Date()).valueOf() });
+    },
+    clearSearchValue () {
+      this.searchValue = '';
+      localStorage.removeItem('searchValue');
+    },
   }
 };
 

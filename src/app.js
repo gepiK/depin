@@ -128,6 +128,13 @@ let router = new VueRouter({
       meta: {
         title: '品牌视频'
       }
+    },
+    {
+      path: '/goodsList',
+      component: resolve => require(['views/goodsList/goodsList.vue'], resolve),
+      meta: {
+        title: '六大优势'
+      }
     }
   ]
 });
