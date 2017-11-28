@@ -118,6 +118,9 @@
         display: inline-block;
         width: 25%;
         padding: 0 0.5%;
+        img {
+          cursor: pointer;
+        }
       }
     }
     .content-s2 {
@@ -126,6 +129,9 @@
       .swiper-slide {
         padding: 2rem;
         background: rgb(244, 240, 234);
+      }
+      .swiper-slide-active {
+        overflow: hidden;
       }
       .news-pic {
         width: 40%;
@@ -136,9 +142,12 @@
         padding: 0 5%;
         float: right;
         .news-title {
-          font-size: 2rem;
-          line-height: 1.5rem;
+          font-size: 1.5rem;
+          line-height: 1.5;
           color: rgb(89, 87, 87);
+          b {
+            cursor: pointer;
+          }
         }
         .l,
         .news-time {
@@ -210,19 +219,58 @@
     .item-style {
       display: inline-block;
     }
+    .main-online {
+      height: 25rem;
+      position: relative;
+    }
     .img-item-1 {
-      width: 49%;
+      width: 49.7%;
+      position: absolute;
+      height: 100%;
+      img {
+        height: 100%;
+      }
       &.img-item-1-right {
+        float: right;
+        position: relative;
         margin-left: 0.7rem;
+        &>div {
+          height: 13.5rem;
+          &.last {
+            position: relative;
+            height: 11rem;
+            margin-top: .5rem;
+          }
+        }
+      }
+      
+      .more {
+        width: 49%;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        background-color: #7f550a;
+        text-align: center;
+        cursor: pointer;
+        span {
+          position: relative;
+          top: 45%;
+          color: #fff;
+          padding: 1rem;
+          border: 1px solid #fff;
+          font-size: 1rem;
+        }
       }
     }
     .img-half {
       width: 49.5%;
+      display: inline-block;
     }
     .img-1-4 {
       width: 24.9%;
       padding: 0 0.1rem;
       box-sizing: border-box;
+      cursor: pointer;
       &.img-left {
         padding-left: 0;
       }
@@ -255,6 +303,7 @@
       width: 33%;
       text-align: center;
       box-sizing: border-box;
+      cursor: pointer;
       p {
         padding-top: 1rem;
         font-size: 0.8rem;
@@ -365,6 +414,9 @@
     font-size: 1.25rem;
     vertical-align: top;
     height: 230px;
+    img {
+      cursor: pointer;
+    }
   }
   .six-goods-1 {
     width: 33%;
@@ -470,6 +522,7 @@
   text-align: center;
   .video {
     width: 33%;
+    padding: 0 5px;
   }
 }
 
@@ -492,7 +545,7 @@
     position: relative;
     top: -1rem;
     color: #888;
-     b {
+    b {
       color: #888 !important;
       font-size: .9rem !important;
     }

@@ -135,6 +135,20 @@ let router = new VueRouter({
       meta: {
         title: '六大优势'
       }
+    },
+    {
+      path: '/goodsList/:index',
+      component: resolve => require(['views/goodsList/goodsList.vue'], resolve),
+      meta: {
+        title: '六大优势'
+      }
+    },
+    {
+      path: '/onlineView',
+      component: resolve =>require(['views/onlineView/onlineView.vue'], resolve),
+      meta: {
+        title: '在线体验'
+      }
     }
   ]
 });

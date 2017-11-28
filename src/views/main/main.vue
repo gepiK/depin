@@ -7,7 +7,7 @@
     <section>
       <div class="cate">
         <div class="cate-item" v-for="item in bigCate" :key="item.id">
-          <img class="img" :src="item.image" alt="">
+          <router-link class="img" tag="img" :src="item.image" :to=" '/prodList/'+item.id"></router-link>
         </div>
       </div>
     </section>
@@ -17,22 +17,30 @@
         <div class="title-t1">
           <b>产品在线3D体验</b>
           <div class="content-title-desc">
-            <p>已有58986位用户进行体验</p>
+            <p>已有{{viewsCount || 0}}位用户进行体验</p>
           </div>
         </div>
         <div class="title-warp-right"></div>
       </div>
-      <div>
+      <div class="main-online">
         <div class="item-style img-item-1">
-          <img class="img" src="../../static/img51.fw.min.png" alt="">
+          <a :href="viewUrls[0]" target="_blank">
+              <img class="img" :src="onlineViews[0]" alt="">
+          </a>
         </div>
         <div class="item-style img-item-1 img-item-1-right">
           <div>
-            <img class="img" src="../../static/img52.fw.min.png" alt="">
+            <a :href="viewUrls[1]" target="_blank">
+            <img class="img" :src="onlineViews[1]" alt="">
+            </a>
           </div>
-          <div>
-            <img class="img img-half" src="../../static/img53.fw.min.png" alt="">
-            <img class="img img-half" src="../../static/img54.fw.png" alt="">
+          <div class="last">
+            <a :href="viewUrls[2]" target="_blank">
+            <img class="img img-half" :src="onlineViews[2]" alt="">
+             </a>
+            <div class="l more">
+              <router-link tag="span" to="/onlineView">体验更多</router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -80,7 +88,7 @@
             <img class="news-pic" :src="item.image" alt="">
             <div class="news-content">
               <p class="news-title">
-                <b>{{item.title}}</b>
+                <router-link tag="b" :to="'/newDetail/'+item.id">{{item.title}}</router-link>
               </p>
               <p class="l">——————</p>
               <span class="l news-time">{{item.created}}</span>
@@ -107,7 +115,6 @@
           <div class="p7">
             <img class="img" src="../../static/p7.jpg" alt="">
           </div>
-
           <ng-form class="order-form" ref="userForm" :model="formData" :rules="formRules">
             <ng-form-item class="order-form-item" prop="realName">
               <span v-if="isIE">您的姓名</span>
@@ -193,8 +200,7 @@
         </router-link>
       </div>
       <div class="section-item clearfix" style="text-align:center">
-        <img v-for="item in appcaseList" :key="item.$index" :class="{'img-left':item.$index===0,'img-right':item.$index===3,'img-middle':item.$index===2||item.$index===3}"
-          class="img-1-4 img-left" :src="item.image" alt="">
+        <router-link tag="img"  :to="'/detail/appcase/'+item.id" v-for="item in appcaseList" :key="item.$index" :class="{'img-left':item.$index===0,'img-right':item.$index===3,'img-middle':item.$index===2||item.$index===3}" class="img-1-4 img-left" :src="item.image" alt=""></router-link>
       </div>
     </section>
     <section>
@@ -217,7 +223,7 @@
           </p>
         </div>
         <div class="six-goods-2 l">
-          <img :src="sixgoods[0]" alt="">
+          <router-link tag="img" to="/goodsList/0" :src="sixgoods[0]"></router-link>
         </div>
         <div class="six-goods-3 l">
           <p>行业</p>
@@ -226,10 +232,10 @@
           </p>
         </div>
         <div class="six-goods-4 l">
-          <img :src="sixgoods[1]" alt="">
+          <router-link tag="img" to="/goodsList/1" :src="sixgoods[1]"></router-link>
         </div>
         <div class="six-goods-1 l">
-          <img :src="sixgoods[2]" alt="">
+          <router-link tag="img" to="/goodsList/2" :src="sixgoods[2]"></router-link>
         </div>
         <div class="six-goods-2 l">
           <p>先进科技</p>
@@ -238,7 +244,7 @@
           </p>
         </div>
         <div class="six-goods-3 l">
-          <img :src="sixgoods[3]" alt="">
+           <router-link tag="img" to="/goodsList/3" :src="sixgoods[3]"></router-link>
         </div>
         <div class="six-goods-4 l">
           <p>首创</p>
@@ -253,7 +259,7 @@
           </p>
         </div>
         <div class="six-goods-2 l">
-          <img :src="sixgoods[4]" alt="">
+          <router-link tag="img" to="/goodsList/4" :src="sixgoods[4]"></router-link>
         </div>
         <div class="six-goods-3 l">
           <p>品牌口碑</p>
@@ -262,7 +268,7 @@
           </p>
         </div>
         <div class="six-goods-4 l">
-          <img :src="sixgoods[5]" alt="">
+          <router-link tag="img" to="/goodsList/5" :src="sixgoods[5]"></router-link>
         </div>
       </div>
     </section>
@@ -273,7 +279,7 @@
           <div class="title-t1">
             <b>装修知识</b>
             <div class="content-title-desc">
-              <p>你可能不了解的只是</p>
+              <p>你可能不了解的知识</p>
             </div>
           </div>
           <div class="title-warp-right"></div>
@@ -289,7 +295,8 @@
       </div>
       <div class="section-item clearfix">
         <div v-for="item in knowledgeList" class="img-zhuangxiu" :key="item.$index">
-          <img class="img l" style="height:15rem" :src="item.image" alt="">
+          <router-link tag="img" :to="'/detail/knowledge/'+item.id"  class="img l" style="height:15rem" :src="item.image"></router-link>
+          <!-- <img class="img l" style="height:15rem" :src="item.image" alt=""> -->
           <p>{{item.title}}</p>
         </div>
       </div>
@@ -326,6 +333,9 @@
       return {
         videoList: [], // 视频列表
         bigCate: [], // 产品分类
+        onlineViews:[],// 在线体验
+        viewUrls:[], // 在线体验跳转的url
+        viewsCount:0, // 在线体验数量
         newsList: [], // 轮播图新闻资讯 5条
         appcaseList: [], // 应用案例列表 4条
         knowledgeList: [], // 装修知识列表 3条
@@ -384,9 +394,12 @@
         observeParents: true, //修改swiper的父元素时，自动初始化swiper
         // 如果需要分页器
         pagination: '.swiper-pagination-s2',
+        paginationClickable :true,
 
       });
       Promise.all([
+        this.getOnlineViewsCount(),
+        this.getOnlineViews(), // 在线体验
         this.getvideoList(), // 视频接口
         this.getBigcate(), // 获取产品分类
         this.querygoods(), // 获取六大优势
@@ -439,8 +452,7 @@
           pageNo: 1,
           pageSize: 5
         }).then(res => {
-          this.newsList = res.data;
-
+            this.newsList = res.data;
         })
       },
       getAppcases() {
@@ -551,7 +563,23 @@
           }
         }
       },
-
+      getOnlineViews(){
+         service.getOnlineViews({
+          pageNo: 1,
+          pageSize: 3,
+        }).then(res => {
+          res.data.forEach(ele => {
+            this.onlineViews.push(ele.image);
+            this.viewUrls.push(ele.url);
+          });
+              
+        });
+      },
+      getOnlineViewsCount(){
+        service.getOnlineViewsCount().then(res=>{
+          this.viewsCount = res.ret;
+        })
+      }
     }
   }
 

@@ -1,0 +1,74 @@
+@color1: rgb(149, 149, 149);
+@color2: rgb(184, 184, 184);
+@color3: rgb(127, 85, 9);
+@color4: rgb(245, 245, 245);
+@color5: #ff4000;
+@color6: rgb(221, 221, 221);
+.online-view {
+  color: @color1;
+  padding: 2rem 0;
+  .header {
+    padding-bottom: .8rem;
+    border-bottom:2px solid #ccc;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color:#666;
+  }
+  .prod-list {
+    margin-bottom: 2rem;
+    text-align: center;
+    .item {
+      min-height: 16rem;
+      width: 31%;
+      padding-bottom: 1rem;
+      margin: 1rem .5rem;
+      border: 1px solid #ddd;
+      text-align: center;
+      color: #000;
+      img {
+        height: 16rem;
+      }
+      .bottom-left {
+        float: left;
+        padding-left: 1rem;
+        line-height: 1.5
+      }
+      p {
+        line-height: 1.5;
+        &.prod-name {
+          padding-top: 1rem;
+          font-size: 1rem;
+        }
+        
+      }
+      a.view-detail-btn {
+        float: right;
+        width: 5rem;
+        margin: 0.8rem 1rem;
+        padding: 0.2rem;
+        color: #fff;
+        background: @color5;
+        cursor: pointer;
+        border-radius: 19px;
+        line-height: 1.5;
+      }
+    }
+    .no-prod {
+      text-align: center;
+      padding: 2rem;
+      font-size: 16px;
+      color: #000;
+    }
+  }
+  .pagination {
+    text-align: center;
+    .active {
+      background-color: @color3;
+      border-color: @color3;
+    }
+    .el-pager li.active {
+      color: #fff;
+    }
+  }
+
+}

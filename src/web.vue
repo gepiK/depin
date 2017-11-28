@@ -27,7 +27,7 @@
           <ng-menu :router="true" theme="default" :default-active="activeIndex" class="ng-menu-demo" mode="horizontal" @select="handleSelect">
             <ng-menu-item index="/">首页</ng-menu-item>
             <ng-menu-item index="/prodList">产品中心</ng-menu-item>
-            <ng-menu-item index="/3">在线体验</ng-menu-item>
+            <ng-menu-item index="/onlineView">在线体验</ng-menu-item>
             <ng-menu-item index="/videoList">品牌视频</ng-menu-item>
             <ng-menu-item index="/newsList">品牌资讯</ng-menu-item>
             <ng-menu-item index="/order">免费量房</ng-menu-item>
@@ -52,11 +52,11 @@
           <img class="img" src="./static/online.fw.png" alt="">
         </a>
         <a href="javascript:void(0)">
-          <img class="img" src="./static/online2.fw.png" alt="">
+              <img class="img" src="./static/online2.fw.png" alt="">
         </a>
-        <a href="javascript:void(0)">
+        <router-link tag="a" to="/onlineView">
           <img class="img" src="./static/online3.fw.png" alt="">
-        </a>
+        </router-link>
         <a href="javascript:void(0)">
           <img class="img" src="./static/online4.fw.png" alt="">
         </a>
@@ -188,6 +188,10 @@ export default {
     $route (route) {
       let path = route.path;
       if (path.includes("prodList")) path = "/prodList";
+      if (path.includes("newDetail")) path = "/newsList";
+      if (path.includes("goodsList")) path = "/goodsList";
+      if (path.includes("appcase")) path = "/lists/appcase";
+      if (path.includes("knowledge")) path = "/lists/knowledge";
       this.activeIndex = path;
     }
   },

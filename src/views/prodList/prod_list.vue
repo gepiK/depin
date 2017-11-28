@@ -36,7 +36,7 @@
         <p>未查询到相关产品!</p>
       </div>
       <div v-else v-for="item in prodList" :key="item.$index" class="l item">
-        <img v-if="item.image" class="img-h l" :src="item.image" alt="">
+        <img v-if="item.image" class="img-h l" :src="item.image+'!/fw/222/clip/222x256a0a0'" alt="">
         <div v-else class="img-h l"></div>
         <p class="prod-name">
           <b>{{item.prodName}}</b>
@@ -162,7 +162,6 @@ export default {
     // 查看详情
     viewDetail (item) {
       let obj = {};
-      console.log(item)
       obj.id = item.id;
       obj.environLevel = item.environLevel;
       obj.image = item.image;
@@ -174,7 +173,6 @@ export default {
       obj.materialName = this.queryItemById(item.materialId, 'propId', this.mateId);
       obj.styleName = this.queryItemById(item.styleId, 'propId', this.styleId);
       obj.technicName = this.queryItemById(item.technicsId, 'propId', this.techId);
-
       this.prod_detail = obj;
       this.showDetail = true;
     },
@@ -184,7 +182,7 @@ export default {
     },
     queryItemById (id, prop, list) {
       let value = '';
-      value = _.map(list, 'propName')[_.map(list, 'prop').indexOf(id)];
+      value = _.map(list, 'propName')[_.map(list, 'propId').indexOf(id)];
       // for (let i = 0; i < list.length; i++) {
       //   if (list[i][prop] === id) {
       //     value = list[i].propName;

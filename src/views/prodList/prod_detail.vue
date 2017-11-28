@@ -1,8 +1,8 @@
 <template>
-  <ng-dialog title="" :visible.sync="isShow" width="70%" class="modal_detail" @close="modal_close" :lock-scroll="true" :close-on-click-modal="false">
+  <ng-dialog title="" :visible.sync="isShow" width="50rem" class="modal_detail" @close="modal_close" :lock-scroll="true" :close-on-click-modal="false">
     <div class="detail">
       <div class="detail-left l">
-        <img :src="toChild.image" alt="">
+        <img :src="toChild.image+'!/fw/283/clip/283x350a0a0'" alt="">
       </div>
       <section class="detail-right l">
         <h2>{{toChild.styleName}}</h2><b>【{{toChild.prodName}}】</b>

@@ -106,3 +106,16 @@ export const getVideoList = function(data) {
   };
   return common.ajax(option);
 };
+
+// 获取在线体验
+export const getOnlineViews = function(data) {
+  let option = { url: '/front/design.html', data, type: 'post' };
+  return common.ajax(option);
+};
+
+// 获取在线体验数量
+export const getOnlineViewsCount = function(data) {
+  let option = { url: '/index/designCount.html', data, type: 'post' };
+  return common.ajax(option);
+};
+
