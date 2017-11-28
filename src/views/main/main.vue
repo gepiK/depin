@@ -179,7 +179,7 @@
         <div class="title-warp-right"></div>
       </div>
 
-      <div class="section-item">
+      <div class="section-item" style="text-align:center">
         <img v-for="item in appcaseList" :key="item.$index" :class="{'img-left':item.$index===0,'img-right':item.$index===3,'img-middle':item.$index===2||item.$index===3}" class="img-1-4 img-left" :src="item.image" alt="">
       </div>
     </section>
