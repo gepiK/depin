@@ -1,5 +1,6 @@
 <style lang="">
 
+
 </style>
 <template>
   <div>
@@ -66,7 +67,11 @@
           <div class="title-warp-right"></div>
         </div>
         <router-link to="/newsList">
-          <img class="more" src="../../static/more1.png" alt="">
+          <span class="more">
+            <b>品牌资讯/了解更多</b>
+            <em>MORE</em>
+            <i class="el-icon-caret-right"></i>
+          </span>
         </router-link>
       </div>
       <div class="swiper-container content-s2 clearfix">
@@ -168,19 +173,28 @@
     </section>
 
     <section>
-      <div class="content-title">
-        <div class="title-warp-left"></div>
-        <div class="title-t1">
-          <b>应用案例</b>
-          <div class="content-title-desc">
-            <p>客户的信任</p>
+      <div class="content-title more-parent">
+        <div class="content-title">
+          <div class="title-warp-left"></div>
+          <div class="title-t1">
+            <b>应用案例</b>
+            <div class="content-title-desc">
+              <p>客户的信任</p>
+            </div>
           </div>
+          <div class="title-warp-right"></div>
         </div>
-        <div class="title-warp-right"></div>
+        <router-link to="/lists/appcase">
+          <span class="more">
+            <b>应用案例/了解更多</b>
+            <em>MORE</em>
+            <i class="el-icon-caret-right"></i>
+          </span>
+        </router-link>
       </div>
-
-      <div class="section-item" style="text-align:center">
-        <img v-for="item in appcaseList" :key="item.$index" :class="{'img-left':item.$index===0,'img-right':item.$index===3,'img-middle':item.$index===2||item.$index===3}" class="img-1-4 img-left" :src="item.image" alt="">
+      <div class="section-item clearfix" style="text-align:center">
+        <img v-for="item in appcaseList" :key="item.$index" :class="{'img-left':item.$index===0,'img-right':item.$index===3,'img-middle':item.$index===2||item.$index===3}"
+          class="img-1-4 img-left" :src="item.image" alt="">
       </div>
     </section>
     <section>
@@ -265,7 +279,11 @@
           <div class="title-warp-right"></div>
         </div>
         <router-link to="/lists/knowledge">
-          <img class="more" src="../../static/more2.png" alt="">
+          <span class="more">
+            <b>装修攻略/了解更多</b>
+            <em>MORE</em>
+            <i class="el-icon-caret-right"></i>
+          </span>
         </router-link>
 
       </div>
@@ -299,242 +317,243 @@
   </div>
 </template>
 <script>
-import common from "js/common";
-import * as filters from "js/filters";
-import * as service from "./service";
+  import common from "js/common";
+  import * as filters from "js/filters";
+  import * as service from "./service";
 
-export default {
-  data () {
-    return {
-      videoList: [], // 视频列表
-      bigCate: [], // 产品分类
-      newsList: [], // 轮播图新闻资讯 5条
-      appcaseList: [], // 应用案例列表 4条
-      knowledgeList: [], // 装修知识列表 3条
-      sixgoods: [], // 六大优势
-      provinces: [], // 省份
-      cities: [], // 城市
-      stores: [], // 门店
-      orderList: [], // 预约列表
-      orderConut: 0, // 预约数量
-      MyMarh: null, // 定时器
-      formData: {
-        realName: '', // 用户姓名
-        tel: '', //用户电话
-        provinceCode: '', // 当前选择的省份
-        cityCode: '', // 当前选择的城市
-        storeId: '', // 当前选择的门店
+  export default {
+    data() {
+      return {
+        videoList: [], // 视频列表
+        bigCate: [], // 产品分类
+        newsList: [], // 轮播图新闻资讯 5条
+        appcaseList: [], // 应用案例列表 4条
+        knowledgeList: [], // 装修知识列表 3条
+        sixgoods: [], // 六大优势
+        provinces: [], // 省份
+        cities: [], // 城市
+        stores: [], // 门店
+        orderList: [], // 预约列表
+        orderConut: 0, // 预约数量
+        MyMarh: null, // 定时器
+        formData: {
+          realName: '', // 用户姓名
+          tel: '', //用户电话
+          provinceCode: '', // 当前选择的省份
+          cityCode: '', // 当前选择的城市
+          storeId: '', // 当前选择的门店
+        },
+        formRules: {
+          realName: {
+            required: true,
+            trigger: 'change',
+            max: 10,
+            message: '请输入姓名',
+          },
+          tel: {
+            required: true,
+            trigger: 'change',
+            type: 'number',
+            message: '请输入电话号码',
+          },
+          provinceCode: {
+            required: true,
+            trigger: 'change',
+            message: '请选择省份',
+          },
+          cityCode: {
+            required: true,
+            trigger: 'change',
+            message: '请选择城市',
+          },
+          storeId: {
+            type: 'number',
+            required: true,
+            trigger: 'change',
+            message: '请选择门店',
+          },
+        }
+      }
+    },
+    mounted() {
+      new Swiper('.content-s2', {
+        autoplay: 5000,
+        direction: 'horizontal',
+        loop: true,
+        observer: true, //修改swiper自己或子元素时，自动初始化swiper
+        observeParents: true, //修改swiper的父元素时，自动初始化swiper
+        // 如果需要分页器
+        pagination: '.swiper-pagination-s2',
+
+      });
+      Promise.all([
+        this.getvideoList(), // 视频接口
+        this.getBigcate(), // 获取产品分类
+        this.querygoods(), // 获取六大优势
+        this.queryProvinces(), // 获取省份信息
+        this.getOrders(), // 获取预约数
+        this.getOrdersCount(), // 获取预约数量
+        this.getNewsList(), // 获取轮播图资讯 5条
+        this.getAppcases(), // 应用案例
+        this.getKnowledges(), // 装修知识
+      ]).then(() => {
+        this.initScroll();
+      })
+    },
+    computed: {
+      isIE() {
+        return filters.matchIe();
+      }
+    },
+    watch: {
+      $route(route) {
+        this.initScroll();
+
+      }
+    },
+    methods: {
+      // 初始化滚动条
+      initScroll() {
+        let path = this.$route.path;
+        let scrollBody = document.documentElement || document.body;
+        if (path.includes('order')) {
+          scrollBody.scrollTop = $('#js-order').offset().top;
+        } else {
+          scrollBody.scrollTop = 0;
+        }
+
       },
-      formRules: {
-        realName: {
-          required: true,
-          trigger: 'change',
-          max: 10,
-          message: '请输入姓名',
-        },
-        tel: {
-          required: true,
-          trigger: 'change',
-          type: 'number',
-          message: '请输入电话号码',
-        },
-        provinceCode: {
-          required: true,
-          trigger: 'change',
-          message: '请选择省份',
-        },
-        cityCode: {
-          required: true,
-          trigger: 'change',
-          message: '请选择城市',
-        },
-        storeId: {
-          type: 'number',
-          required: true,
-          trigger: 'change',
-          message: '请选择门店',
-        },
-      }
-    }
-  },
-  mounted () {
-    new Swiper('.content-s2', {
-      autoplay: 5000,
-      direction: 'horizontal',
-      loop: true,
-      observer: true, //修改swiper自己或子元素时，自动初始化swiper
-      observeParents: true, //修改swiper的父元素时，自动初始化swiper
-      // 如果需要分页器
-      pagination: '.swiper-pagination-s2',
+      getBigcate() {
+        service.getBigcate().then(res => {
+          this.bigCate = res.ret;
+        })
+      },
+      // 视频接口
+      getvideoList() {
+        service.getVideoList().then(res => {
+          this.videoList = res.ret;
+        });
+      },
+      getNewsList() {
+        service.getNewsList({
+          pageNo: 1,
+          pageSize: 5
+        }).then(res => {
+          this.newsList = res.data;
 
-    });
-    Promise.all([
-      this.getvideoList(), // 视频接口
-      this.getBigcate(), // 获取产品分类
-      this.querygoods(), // 获取六大优势
-      this.queryProvinces(), // 获取省份信息
-      this.getOrders(), // 获取预约数
-      this.getOrdersCount(), // 获取预约数量
-      this.getNewsList(), // 获取轮播图资讯 5条
-      this.getAppcases(), // 应用案例
-      this.getKnowledges(), // 装修知识
-    ]).then(() => {
-      this.initScroll();
-    })
-  },
-  computed: {
-    isIE () {
-      return filters.matchIe();
-    }
-  },
-  watch: {
-    $route (route) {
-      this.initScroll();
+        })
+      },
+      getAppcases() {
+        service.getAppcases({
+          pageNo: 1,
+          pageSize: 4
+        }).then(res => {
+          this.appcaseList = res.data;
+        })
+      },
+      // 获取六大优势
+      querygoods() {
+        service.querygoods().then(res => {
+          this.sixgoods = res;
+        });
+      },
+      getKnowledges() {
+        service.getKnowledges({
+          pageNo: 1,
+          pageSize: 3
+        }).then(res => {
+          this.knowledgeList = res.data;
+        })
+      },
+      //  获取省份
+      queryProvinces() {
+        service.queryProvinces().then(res => {
+          this.provinces = res.ret;
+        });
+      },
+      // 获取城市
+      queryCity(val) {
+        service.queryCity({
+          "pid": val
+        }).then(res => {
+          this.cities = res.ret;
+        });
+      },
+      // 获取门店
+      queryStore(val) {
+        service.queryStore({
+          "cityCode": val
+        }).then(res => {
+          this.stores = res.ret;
+        });
+      },
+      // 监听事件
+      provinceChange(val) {
+        this.formData.provinceCode = val;
+        this.formData.cityCode = '';
+        this.stores = [];
+        this.queryCity(val);
+      },
+      cityChange(val) {
+        this.formData.cityCode = val;
+        this.formData.storeId = '';
+        this.queryStore(val);
+      },
+      storeChange(val) {
+        this.formData.storeId = val;
+      },
+      // 提交订单
+      saveOrderHandle() {
+        this.$refs.userForm.validate(vaild => {
+          if (vaild) {
+            service.saveOrder(this.formData).then(res => {
+              this.$message({
+                message: res.desc,
+                type: 'success'
+              });
+              this.getOrders();
+              this.getOrdersCount();
+              this.$refs.userForm.resetFields();
+            })
+          }
+        })
 
-    }
-  },
-  methods: {
-    // 初始化滚动条
-    initScroll () {
-      let path = this.$route.path;
-      let scrollBody = document.documentElement || document.body;
-      if (path.includes('order')) {
-        scrollBody.scrollTop = $('#js-order').offset().top;
-      } else {
-        scrollBody.scrollTop = 0;
-      }
-
-    },
-    getBigcate () {
-      service.getBigcate().then(res => {
-        this.bigCate = res.ret;
-      })
-    },
-    // 视频接口 
-    getvideoList () {
-      service.getVideoList().then(res => {
-        this.videoList = res.ret;
-      });
-    },
-    getNewsList () {
-      service.getNewsList({
-        pageNo: 1,
-        pageSize: 5
-      }).then(res => {
-        this.newsList = res.data;
-
-      })
-    },
-    getAppcases () {
-      service.getAppcases({
-        pageNo: 1,
-        pageSize: 4
-      }).then(res => {
-        this.appcaseList = res.data;
-      })
-    },
-    // 获取六大优势
-    querygoods () {
-      service.querygoods().then(res => {
-        this.sixgoods = res;
-      });
-    },
-    getKnowledges () {
-      service.getKnowledges({
-        pageNo: 1,
-        pageSize: 3
-      }).then(res => {
-        this.knowledgeList = res.data;
-      })
-    },
-    //  获取省份
-    queryProvinces () {
-      service.queryProvinces().then(res => {
-        this.provinces = res.ret;
-      });
-    },
-    // 获取城市
-    queryCity (val) {
-      service.queryCity({
-        "pid": val
-      }).then(res => {
-        this.cities = res.ret;
-      });
-    },
-    // 获取门店
-    queryStore (val) {
-      service.queryStore({
-        "cityCode": val
-      }).then(res => {
-        this.stores = res.ret;
-      });
-    },
-    // 监听事件
-    provinceChange (val) {
-      this.formData.provinceCode = val;
-      this.formData.cityCode = '';
-      this.stores = [];
-      this.queryCity(val);
-    },
-    cityChange (val) {
-      this.formData.cityCode = val;
-      this.formData.storeId = '';
-      this.queryStore(val);
-    },
-    storeChange (val) {
-      this.formData.storeId = val;
-    },
-    // 提交订单
-    saveOrderHandle () {
-      this.$refs.userForm.validate(vaild => {
-        if (vaild) {
-          service.saveOrder(this.formData).then(res => {
-            this.$message({
-              message: res.desc,
-              type: 'success'
-            });
-            this.getOrders();
-            this.getOrdersCount();
-            this.$refs.userForm.resetFields();
-          })
+      },
+      // 获取预约列表
+      getOrders() {
+        service.getOrders().then(res => {
+          this.orderList = res.ret;
+          this.moveInterval();
+        });
+      },
+      // 获取预约数量
+      getOrdersCount() {
+        service.getOrdersCount().then(res => {
+          this.orderConut = res.ret;
+        });
+      },
+      moveInterval() {
+        let scrollApp = document.querySelector('#scrollapp');
+        let scrolls = document.querySelectorAll('#scrollapp ul');
+        let speed = 30;
+        if (this.MyMarh) {
+          clearInterval(this.MyMarh);
         }
-      })
+        this.MyMarh = setInterval(Marqueeh, speed)
+        scrollApp.onmouseover = () => clearInterval(this.MyMarh)
+        scrollApp.onmouseout = () => this.MyMarh = setInterval(Marqueeh, speed)
 
-    },
-    // 获取预约列表
-    getOrders () {
-      service.getOrders().then(res => {
-        this.orderList = res.ret;
-        this.moveInterval();
-      });
-    },
-    // 获取预约数量
-    getOrdersCount () {
-      service.getOrdersCount().then(res => {
-        this.orderConut = res.ret;
-      });
-    },
-    moveInterval () {
-      let scrollApp = document.querySelector('#scrollapp');
-      let scrolls = document.querySelectorAll('#scrollapp ul');
-      let speed = 30;
-      if (this.MyMarh) {
-        clearInterval(this.MyMarh);
-      }
-      this.MyMarh = setInterval(Marqueeh, speed)
-      scrollApp.onmouseover = () => clearInterval(this.MyMarh)
-      scrollApp.onmouseout = () => this.MyMarh = setInterval(Marqueeh, speed)
-
-      function Marqueeh () {
-        if (scrolls[1].offsetHeight - scrollApp.scrollTop <= 0)
-          scrollApp.scrollTop -= scrolls[0].offsetHeight
-        else {
-          scrollApp.scrollTop++
+        function Marqueeh() {
+          if (scrolls[1].offsetHeight - scrollApp.scrollTop <= 0)
+            scrollApp.scrollTop -= scrolls[0].offsetHeight
+          else {
+            scrollApp.scrollTop++
+          }
         }
-      }
-    },
+      },
 
+    }
   }
-}
 
 </script>
+
