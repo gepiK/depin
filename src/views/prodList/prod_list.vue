@@ -45,14 +45,14 @@
         <p class="view-detail-btn" @click="viewDetail(item)">查看详情</p>
       </div>
     </div>
-    <ng-pagination class="pagination" @current-change="handleCurrentChange" :page-size="16" layout="total, prev, pager, next" :total="total">
+    <ng-pagination class="pagination" @current-change="handleCurrentChange" :currentPage.sync='currentPage' :page-size="16" layout="total, prev, pager, next" :total="total">
     </ng-pagination>
     <prod-detail :showDetail="showDetail" :toChild="prod_detail" @close="detailModalClose"></prod-detail>
   </div>
 </template>
 <script>
 import './index.less';
-import * as service from './service.js'
+import * as service from './service.js';
 import prodDetail from './prod_detail';
 import _ from 'lodash';
 export default {
@@ -75,6 +75,7 @@ export default {
       total: 0, // 产品数量
       showDetail: false, // 显示产品详情
       prod_detail: {}, // 传递给弹窗的信息
+      currentPage:1, //
     }
   },
   mounted () {
@@ -83,6 +84,9 @@ export default {
   },
   watch: {
     $route () {
+      this.$nextTick(()=>{
+        this.currentPage = 1;
+      });
       this.getFilter();
     }
   },
@@ -91,7 +95,9 @@ export default {
       let data = {};
       Object.assign(data, this.filter);
       let searchValue = localStorage.getItem('searchValue');
-      if (searchValue) data = { searchValue };
+      if (searchValue) {
+        data = { searchValue };
+      }
       service.getProdList({ pageNo: val, pageSize: 16, ...data }).then(res => {
         this.prodList = res.data;
         this.total = res.count;
@@ -126,6 +132,9 @@ export default {
     },
     selectFilter (type, item) {
       this.$emit('clearSearchValue');
+      this.$nextTick(()=>{
+        this.currentPage = 1;
+      });
       if (item.isActive) {
         return;
       } else {
