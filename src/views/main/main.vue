@@ -25,18 +25,18 @@
       <div class="main-online">
         <div class="item-style img-item-1">
           <a :href="viewUrls[0]" target="_blank">
-              <img class="img" :src="onlineViews[0]" alt="">
+              <img class="img" :src="onlineViews[0]+'!/fw/508/clip/508x445a0a0'" alt="">
           </a>
         </div>
         <div class="item-style img-item-1 img-item-1-right">
           <div>
             <a :href="viewUrls[1]" target="_blank">
-            <img class="img" :src="onlineViews[1]" alt="">
+            <img class="img" :src="onlineViews[1]+'!/fw/508/clip/508x246a0a0'" alt="">
             </a>
           </div>
           <div class="last">
             <a :href="viewUrls[2]" target="_blank">
-            <img class="img img-half" :src="onlineViews[2]" alt="">
+            <img class="img img-half" :src="onlineViews[2]+'!/fw/252/clip/252x190a0a0'" alt="">
              </a>
             <div class="l more">
               <router-link tag="span" to="/onlineView">体验更多</router-link>
