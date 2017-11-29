@@ -85,8 +85,8 @@
       <div class="swiper-container content-s2 clearfix">
         <div class="swiper-wrapper">
           <div v-for="item in newsList" class="swiper-slide" :key="item.id">
-            <div class="l news-pic-warp">
-              <img class="news-pic" :src="item.image" alt="">
+            <div class="l news-pic-warp" :style="{backgroundImage:`url('${item.image}')`}">
+              <!-- <img class="news-pic" :src="item.image" alt=""> -->
             </div>
             <div class="news-content">
               <p class="news-title">
@@ -224,8 +224,8 @@
             <b>全球供应链</b>
           </p>
         </div>
-        <div class="six-goods-2 l">
-          <router-link tag="img" to="/goodsList/0" :src="sixgoods[0]"></router-link>
+        <div class="six-goods-2 l" :style="{backgroundImage:`url('${sixgoods[0]}')`}">
+          <router-link tag="img" to="/goodsList/0"></router-link>
         </div>
         <div class="six-goods-3 l">
           <p>行业</p>
@@ -233,11 +233,11 @@
             <b>领先生产工艺</b>
           </p>
         </div>
-        <div class="six-goods-4 l">
-          <router-link tag="img" to="/goodsList/1" :src="sixgoods[1]"></router-link>
+        <div class="six-goods-4 l" :style="{backgroundImage:`url('${sixgoods[1]}')`}">
+          <router-link tag="img" to="/goodsList/1"></router-link>
         </div>
-        <div class="six-goods-1 l">
-          <router-link tag="img" to="/goodsList/2" :src="sixgoods[2]"></router-link>
+        <div class="six-goods-1 l" :style="{backgroundImage:`url('${sixgoods[2]}')`}">
+          <router-link tag="img" to="/goodsList/2"></router-link>
         </div>
         <div class="six-goods-2 l">
           <p>先进科技</p>
@@ -245,8 +245,8 @@
             <b>专利技术</b>
           </p>
         </div>
-        <div class="six-goods-3 l">
-           <router-link tag="img" to="/goodsList/3" :src="sixgoods[3]"></router-link>
+        <div class="six-goods-3 l" :style="{backgroundImage:`url('${sixgoods[3]}')`}">
+           <router-link tag="img" to="/goodsList/3"></router-link>
         </div>
         <div class="six-goods-4 l">
           <p>首创</p>
@@ -260,8 +260,8 @@
             <b>德国原创设计</b>
           </p>
         </div>
-        <div class="six-goods-2 l">
-          <router-link tag="img" to="/goodsList/4" :src="sixgoods[4]"></router-link>
+        <div class="six-goods-2 l" :style="{backgroundImage:`url('${sixgoods[4]}')`}">
+          <router-link tag="img" to="/goodsList/4"></router-link>
         </div>
         <div class="six-goods-3 l">
           <p>品牌口碑</p>
@@ -269,8 +269,8 @@
             <b>行业至高荣誉</b>
           </p>
         </div>
-        <div class="six-goods-4 l">
-          <router-link tag="img" to="/goodsList/5" :src="sixgoods[5]"></router-link>
+        <div class="six-goods-4 l" :style="{backgroundImage:`url('${sixgoods[5]}')`}">
+          <router-link tag="img" to="/goodsList/5"></router-link>
         </div>
       </div>
     </section>
