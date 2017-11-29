@@ -40,7 +40,7 @@
       <div class="swiper-container content-banner">
         <div class="swiper-wrapper">
           <div v-for="item in bannerList" class="swiper-slide" :key="item.id">
-            <img class="img-h" :src="item" alt="">
+            <img class="img" :src="item" alt="">
           </div>
         </div>
         <div class="swiper-pagination swiper-pagination-banner"></div>

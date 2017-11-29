@@ -85,7 +85,9 @@
       <div class="swiper-container content-s2 clearfix">
         <div class="swiper-wrapper">
           <div v-for="item in newsList" class="swiper-slide" :key="item.id">
-            <img class="news-pic" :src="item.image" alt="">
+            <div class="l news-pic-warp">
+              <img class="news-pic" :src="item.image" alt="">
+            </div>
             <div class="news-content">
               <p class="news-title">
                 <router-link tag="b" :to="'/newDetail/'+item.id">{{item.title}}</router-link>
@@ -138,14 +140,14 @@
                 </ng-option>
               </ng-select>
             </ng-form-item>
-            <ng-form-item class="order-form-item" prop="storeId">
+            <ng-form-item class="order-form-item" prop="storeId" style="margin-bottom:0">
               <span v-if="isIE">请选择门店</span>
               <ng-select class="form-item-select" v-model="formData.storeId" width="50%" placeholder="请选择门店" @change="storeChange">
                 <ng-option v-for="item in stores" :key="item.id" :label="item.storeName" :value="item.id">
                 </ng-option>
               </ng-select>
             </ng-form-item>
-            <ng-form-item class="order-form-item">
+            <ng-form-item class="order-form-item" style="margin-bottom:0">
               <ng-button type="primary" class="order-btn" @click="saveOrderHandle()">立即预约</ng-button>
             </ng-form-item>
           </ng-form>
@@ -294,10 +296,9 @@
 
       </div>
       <div class="section-item clearfix">
-        <div v-for="item in knowledgeList" class="img-zhuangxiu" :key="item.$index">
-          <router-link tag="img" :to="'/detail/knowledge/'+item.id"  class="img l" style="height:15rem" :src="item.image"></router-link>
-          <!-- <img class="img l" style="height:15rem" :src="item.image" alt=""> -->
-          <p>{{item.title}}</p>
+        <div v-for="(item,index) in knowledgeList" class="img-zhuangxiu" :key="index" :style="{margin:index===1?'0 .1rem':''}">
+          <router-link tag="img" :to="'/detail/knowledge/'+item.id"  class="img l" :src="item.image"></router-link>
+          <router-link tag="span" :to="'/detail/knowledge/'+item.id">{{item.title}}</router-link>
         </div>
       </div>
     </section>
@@ -572,7 +573,7 @@
             this.onlineViews.push(ele.image);
             this.viewUrls.push(ele.url);
           });
-              
+
         });
       },
       getOnlineViewsCount(){
