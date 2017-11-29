@@ -50,6 +50,6 @@ export const getStyles = function(data) {
 
 // 获取产品详情
 export const getProdDetail = function(data) {
-  let option = { url: 'front/product/detail.html', data, type: 'post' };
+  let option = { url: '/front/product/detail.html', data, type: 'post' };
   return common.ajax(option);
 };
